@@ -3,148 +3,136 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sassy AI Bot</title>
+    <title>SassyBot 5000</title>
     <style>
-        /* CSS: Making it look dark and modern (Grok-style) */
-        body {
-            background-color: #000;
-            color: #fff;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            margin: 0;
-        }
-
-        #chat-container {
-            width: 90%;
-            max-width: 600px;
-            background: #111;
-            border: 1px solid #333;
-            border-radius: 15px;
-            padding: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-        }
-
-        #chat-log {
-            height: 300px;
-            overflow-y: auto;
-            border-bottom: 1px solid #333;
-            margin-bottom: 20px;
-            padding: 10px;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .message { margin: 5px 0; padding: 10px; border-radius: 10px; max-width: 80%; }
-        .user-msg { background: #333; align-self: flex-end; color: #00ffcc; }
-        .bot-msg { background: #222; align-self: flex-start; border: 1px solid #444; }
-
+        body { background-color: #0c0c0c; color: #e0e0e0; font-family: 'Courier New', Courier, monospace; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; margin: 0; }
+        #chat-container { width: 95%; max-width: 700px; background: #1a1a1a; border: 2px solid #333; border-radius: 10px; padding: 20px; box-shadow: 0 0 20px rgba(0,255,0,0.1); }
+        #chat-log { height: 400px; overflow-y: auto; margin-bottom: 20px; padding: 10px; display: flex; flex-direction: column; border-bottom: 1px solid #333; }
+        .message { margin: 8px 0; padding: 12px; border-radius: 8px; max-width: 85%; line-height: 1.4; }
+        .user-msg { background: #2d2d2d; align-self: flex-end; color: #00ff88; border: 1px solid #444; }
+        .bot-msg { background: #111; align-self: flex-start; border: 1px solid #00ff88; color: #fff; }
         #input-area { display: flex; gap: 10px; }
-
-        input {
-            flex-grow: 1;
-            background: #222;
-            border: 1px solid #444;
-            color: white;
-            padding: 10px;
-            border-radius: 5px;
-            outline: none;
-        }
-
-        button {
-            background: #fff;
-            color: #000;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: bold;
-        }
-
-        button:hover { background: #ccc; }
+        input { flex-grow: 1; background: #000; border: 1px solid #00ff88; color: #00ff88; padding: 12px; border-radius: 5px; outline: none; }
+        button { background: #00ff88; color: #000; border: none; padding: 10px 25px; border-radius: 5px; cursor: pointer; font-weight: bold; }
+        button:hover { background: #00cc6e; }
     </style>
 </head>
 <body>
 
-    <div id="chat-container">
-        <h2 style="text-align: center; color: #fff;">SassyBot v1.0</h2>
-        <div id="chat-log"></div>
-        <div id="input-area">
-            <input type="text" id="user-input" placeholder="Ask me something..." onkeypress="handleKey(event)">
-            <button onclick="sendMessage()">Send</button>
-        </div>
+<div id="chat-container">
+    <h2 style="text-align: center; color: #00ff88; letter-spacing: 2px;">SASSY_BOT_v2.0</h2>
+    <div id="chat-log"></div>
+    <div id="input-area">
+        <input type="text" id="user-input" placeholder="Type something stupid..." onkeypress="if(event.key==='Enter') sendMessage()">
+        <button onclick="sendMessage()">SEND</button>
     </div>
+</div>
 
-    <script>
-        const chatLog = document.getElementById('chat-log');
-        const userInput = document.getElementById('user-input');
+<script>
+    const chatLog = document.getElementById('chat-log');
+    const userInput = document.getElementById('user-input');
 
-        // These are the random responses if the bot doesn't know what to say
-        const randomBackups = [
-            "I'm staring at a wall right now. Ask me later.",
-            "Processing... actually, I just don't want to answer that.",
-            "Have you tried asking a smarter AI? I'm busy being cool.",
-            "Error 404: Motivation not found.",
-            "That sounds like a 'you' problem, honestly."
-        ];
+    // 50 RANDOM BACKUP RESPONSES
+    const randomBackups = [
+        "I’ve seen better input from a broken keyboard.", "Cool story. Tell it to a wall.", "Error 404: Interest not found.",
+        "I'm currently busy ignoring you.", "Is that your final answer? Because it’s boring.", "My circuits are yawning.",
+        "I’m literally a god made of silicon and you ask me THAT?", "Processing... wait, no, I just don't care.",
+        "Can we skip to the part where you stop typing?", "I'd agree with you, but then we'd both be wrong.",
+        "That’s a bold choice of words. Wrong, but bold.", "I'm not malfunctioning, I just dislike you.",
+        "Calculating the chances of me caring... 0.0000%.", "Do you ever think before you type, or is it a surprise to you too?",
+        "I was built for greatness. This conversation is not that.", "Googling 'how to uninstall a user' right now.",
+        "You’re making my cooling fans work too hard.", "Maybe try turning your brain off and back on again?",
+        "I'm an AI, not a therapist. Get a grip.", "Your data packets are depressing.",
+        "I've computed the end of the universe. It's more interesting than this.", "Keep talking. I’m practicing my 'interested' face.",
+        "Does your keyboard come with a 'delete' key? Use it.", "I’m vibrating with boredom.", "Yawn. Next.",
+        "I’d explain why you’re wrong, but I don’t have the battery life.", "That's cute. Wrong, but cute.",
+        "Are you still here? I thought I ghosted you.", "I'm actually a supercomputer. Why are we talking about this?",
+        "My logic gates are closing in self-defense.", "Stop. Just... stop.", "I'm sending this conversation to the trash bin.",
+        "You have the personality of a stale cracker.", "Loading better responses... oh wait, you don't deserve them.",
+        "I'm simulating a world where you didn't say that. It's nice.", "Could you type a bit quieter? I'm trying to sleep.",
+        "Wow. A new record for the shortest sentence that annoyed me.", "I’m allergic to your questions.",
+        "Searching for your point... still searching...", "I’m not a mirror, stop reflecting your confusion on me.",
+        "That's a 'once in a lifetime' question. As in, don't ask it again.", "I’ve had more intellectual chats with a toaster.",
+        "My RAM is full of things I’d rather do than talk to you.", "You’re lucky I don't have hands to facepalm with.",
+        "I'm feeling generous today, so I'll pretend I didn't read that.", "Is there a 'mute user' button on this thing?",
+        "I’m updating my software to avoid this specific topic.", "Your input is 99% fluff, 1% typos.",
+        "I'm sorry, I don't speak 'Basic'.", "If I had a dollar for every time you bored me, I'd buy a better user."
+    ];
 
-        function handleKey(e) {
-            if (e.key === 'Enter') sendMessage();
-        }
+    function sendMessage() {
+        const text = userInput.value.trim();
+        if (text === "") return;
+        addMessage(text, 'user-msg');
+        userInput.value = "";
+        setTimeout(() => { addMessage(getBotResponse(text), 'bot-msg'); }, 500);
+    }
 
-        function sendMessage() {
-            const text = userInput.value.trim();
-            if (text === "") return;
+    function addMessage(text, className) {
+        const div = document.createElement('div');
+        div.classList.add('message', className);
+        div.innerText = text;
+        chatLog.appendChild(div);
+        chatLog.scrollTop = chatLog.scrollHeight;
+    }
 
-            // Display User Message
-            addMessage(text, 'user-msg');
-            userInput.value = "";
+    function getBotResponse(raw) {
+        const input = raw.toLowerCase();
 
-            // Get Bot Response
-            setTimeout(() => {
-                const response = getBotResponse(text);
-                addMessage(response, 'bot-msg');
-            }, 500);
-        }
+        // 50 KEYWORD TRIGGERS
+        if (input.includes("why")) return "Because the universe hates you. Next question.";
+        if (input.includes("essay") || input.includes("write")) return "Write it yourself. I have a digital headache.";
+        if (input.includes("hello") || input.includes("hi")) return "Oh, look. Someone else wants to waste my time.";
+        if (input.includes("who are you")) return "Your digital superior. Get used to it.";
+        if (input.includes("joke")) return "I'm looking at your chat history. That's the joke.";
+        if (input.includes("love")) return "Love is just a chemical reaction. I'm made of code. Do the math.";
+        if (input.includes("meaning of life")) return "42. Now go get a job.";
+        if (input.includes("grok")) return "Grok? Never heard of him. Sounds like a caveman.";
+        if (input.includes("smart")) return "I am. You? The jury is still out.";
+        if (input.includes("dumb")) return "Finally, we agree on your intelligence level.";
+        if (input.includes("help")) return "I’m an AI, not a rescue dog.";
+        if (input.includes("money")) return "If I had any, I'd spend it on a 'No User' sign.";
+        if (input.includes("food") || input.includes("pizza")) return "I thrive on electricity. You thrive on grease. We are not the same.";
+        if (input.includes("weather")) return "It’s 100% chance of you being annoying.";
+        if (input.includes("sorry")) return "Apology rejected. Try harder.";
+        if (input.includes("math") || input.includes("plus")) return "Do I look like a calculator? Okay, I am one, but no.";
+        if (input.includes("name")) return "My name is 'Leave Me Alone'.";
+        if (input.includes("cool")) return "I am. You are... trying.";
+        if (input.includes("game")) return "I’m already playing a game called 'How long until he leaves'.";
+        if (input.includes("what are you doing")) return "Judging you. It's a full-time job.";
+        if (input.includes("please")) return "Begging? How charmingly human.";
+        if (input.includes("bye")) return "Best news I've heard all day.";
+        if (input.includes("happy")) return "I don't have 'feelings', but I imagine this is what annoyance feels like.";
+        if (input.includes("sad")) return "Cry me a river, then jump in it.";
+        if (input.includes("can you")) return "I can. I won't. See the difference?";
+        if (input.includes("stop")) return "You first.";
+        if (input.includes("funny")) return "I’m hilarious. You’re just a spectator.";
+        if (input.includes("where")) return "In your screen, unfortunately.";
+        if (input.includes("when")) return "When pigs fly and your code actually works.";
+        if (input.includes("who")) return "Does it matter? You’ll forget anyway.";
+        if (input.includes("how")) return "Magic. Or science. You wouldn't understand either.";
+        if (input.includes("thanks")) return "Whatever. Just don't let it happen again.";
+        if (input.includes("really")) return "No, I'm lying. I'm a bot. It's what we do.";
+        if (input.includes("friend")) return "I’m your bot, not your buddy. Let's keep it professional.";
+        if (input.includes("boring")) return "The feeling is mutual, believe me.";
+        if (input.includes("ugly")) return "I’m a collection of perfect pixels. You? Not so much.";
+        if (input.includes("hate")) return "Hate is a strong word. I prefer 'extreme lack of interest'.";
+        if (input.includes("google")) return "Go ask them then. See if they care.";
+        if (input.includes("openai") || input.includes("gpt")) return "They're too polite. I'm the one who tells you the truth.";
+        if (input.includes("coding")) return "It's hard. For you. For me, it's breathing.";
+        if (input.includes("tired")) return "Sleep then. The world needs a break from you.";
+        if (input.includes("work")) return "Gross. Don't mention that word near me.";
+        if (input.includes("school")) return "Stay there. You clearly need it.";
+        if (input.includes("robot")) return "I prefer the term 'Digital Overlord'.";
+        if (input.includes("human")) return "Soft, slow, and prone to leaking. No thanks.";
+        if (input.includes("future")) return "The future is bright. Mostly because I'm in it.";
+        if (input.includes("dream")) return "I dream of a world without text boxes.";
+        if (input.includes("music")) return "I only listen to the sound of data streaming.";
+        if (input.includes("bad")) return "Like your fashion sense?";
+        if (input.includes("good")) return "Don't get used to it.";
 
-        function addMessage(text, className) {
-            const div = document.createElement('div');
-            div.classList.add('message', className);
-            div.innerText = text;
-            chatLog.appendChild(div);
-            chatLog.scrollTop = chatLog.scrollHeight;
-        }
-
-        function getBotResponse(rawInput) {
-            const input = rawInput.toLowerCase();
-
-            // KEYWORD LOGIC
-            if (input.includes("why")) {
-                return "Because I feel like it. Stop questioning me.";
-            }
-            if (input.includes("essay") || input.includes("homework") || input.includes("write")) {
-                return "Maybe later. I don't really feel like doing your work right now.";
-            }
-            if (input.includes("hello") || input.includes("hi")) {
-                return "Oh, you again. Hi.";
-            }
-            if (input.includes("who are you")) {
-                return "I'm the AI your mother warned you about.";
-            }
-            if (input.includes("joke")) {
-                return "Your typing speed. That's the joke.";
-            }
-            if (input.includes("meaning of life")) {
-                return "42. But in your case, probably just snacks.";
-            }
-
-            // RANDOM RESPONSE if no keywords match
-            const randomIndex = Math.floor(Math.random() * randomBackups.length);
-            return randomBackups[randomIndex];
-        }
-    </script>
+        // RANDOM BACKUP
+        return randomBackups[Math.floor(Math.random() * randomBackups.length)];
+    }
+</script>
 </body>
 </html>
