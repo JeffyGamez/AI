@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sassy AI Bot</title>
+    <style>
+        /* CSS: Making it look dark and modern (Grok-style) */
+        body {
+            background-color: #000;
+            color: #fff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        #chat-container {
+            width: 90%;
+            max-width: 600px;
+            background: #111;
+            border: 1px solid #333;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        #chat-log {
+            height: 300px;
+            overflow-y: auto;
+            border-bottom: 1px solid #333;
+            margin-bottom: 20px;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .message { margin: 5px 0; padding: 10px; border-radius: 10px; max-width: 80%; }
+        .user-msg { background: #333; align-self: flex-end; color: #00ffcc; }
+        .bot-msg { background: #222; align-self: flex-start; border: 1px solid #444; }
+
+        #input-area { display: flex; gap: 10px; }
+
+        input {
+            flex-grow: 1;
+            background: #222;
+            border: 1px solid #444;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            outline: none;
+        }
+
+        button {
+            background: #fff;
+            color: #000;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        button:hover { background: #ccc; }
+    </style>
+</head>
+<body>
+
+    <div id="chat-container">
+        <h2 style="text-align: center; color: #fff;">SassyBot v1.0</h2>
+        <div id="chat-log"></div>
+        <div id="input-area">
+            <input type="text" id="user-input" placeholder="Ask me something..." onkeypress="handleKey(event)">
+            <button onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+
+    <script>
+        const chatLog = document.getElementById('chat-log');
+        const userInput = document.getElementById('user-input');
+
+        // These are the random responses if the bot doesn't know what to say
+        const randomBackups = [
+            "I'm staring at a wall right now. Ask me later.",
+            "Processing... actually, I just don't want to answer that.",
+            "Have you tried asking a smarter AI? I'm busy being cool.",
+            "Error 404: Motivation not found.",
+            "That sounds like a 'you' problem, honestly."
+        ];
+
+        function handleKey(e) {
+            if (e.key === 'Enter') sendMessage();
+        }
+
+        function sendMessage() {
+            const text = userInput.value.trim();
+            if (text === "") return;
+
+            // Display User Message
+            addMessage(text, 'user-msg');
+            userInput.value = "";
+
+            // Get Bot Response
+            setTimeout(() => {
+                const response = getBotResponse(text);
+                addMessage(response, 'bot-msg');
+            }, 500);
+        }
+
+        function addMessage(text, className) {
+            const div = document.createElement('div');
+            div.classList.add('message', className);
+            div.innerText = text;
+            chatLog.appendChild(div);
+            chatLog.scrollTop = chatLog.scrollHeight;
+        }
+
+        function getBotResponse(rawInput) {
+            const input = rawInput.toLowerCase();
+
+            // KEYWORD LOGIC
+            if (input.includes("why")) {
+                return "Because I feel like it. Stop questioning me.";
+            }
+            if (input.includes("essay") || input.includes("homework") || input.includes("write")) {
+                return "Maybe later. I don't really feel like doing your work right now.";
+            }
+            if (input.includes("hello") || input.includes("hi")) {
+                return "Oh, you again. Hi.";
+            }
+            if (input.includes("who are you")) {
+                return "I'm the AI your mother warned you about.";
+            }
+            if (input.includes("joke")) {
+                return "Your typing speed. That's the joke.";
+            }
+            if (input.includes("meaning of life")) {
+                return "42. But in your case, probably just snacks.";
+            }
+
+            // RANDOM RESPONSE if no keywords match
+            const randomIndex = Math.floor(Math.random() * randomBackups.length);
+            return randomBackups[randomIndex];
+        }
+    </script>
+</body>
+</html>
